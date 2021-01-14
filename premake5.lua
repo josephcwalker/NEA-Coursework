@@ -2,11 +2,19 @@ workspace "Connect 4 With AI"
 	configurations { "Debug", "Release" }
 	architecture "x64"
 
+os.execute [[vendor\CMake\bin\cmake -DBUILD_SHARED_LIBS=OFF -S "Connect 4\vendor\SFML" -B "Connect 4\vendor\SFML" -G "MinGW Makefiles"]]
+
+externalproject "SFML"
+	location "Connect 4/vendor/SFML"
+	kind "StaticLib"
+	language "C++"
+
 project "Connect 4"
 	kind "ConsoleApp"
 	language "C++"
 
 	location "%{prj.name}"
+	targetname "Connect4"
 
 	targetdir "bin/%{cfg.buildcfg}"
 	objdir "bin/%{cfg.buildcfg}-obj"
@@ -18,7 +26,25 @@ project "Connect 4"
 
 	includedirs
 	{
-		"%{prj.name}/src"
+		"%{prj.name}/src",
+		"%{prj.name}/vendor/SFML/include"
+	}
+
+	libdirs
+	{
+		"%{prj.name}/vendor/SFML/lib"
+	}
+
+	defines "SFML_STATIC"
+
+	links
+	{
+		"sfml-graphics-s",
+		"sfml-window-s",
+		"sfml-system-s",
+		"opengl32",
+		"winmm",
+		"gdi32"
 	}
 
 	filter "configurations:Debug"
