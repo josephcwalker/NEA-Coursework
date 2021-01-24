@@ -1,6 +1,11 @@
+#pragma once
+
 #include "State.h"
 
 #include <stack>
+
+#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 
 namespace Connect
 {
@@ -29,5 +34,7 @@ namespace Connect
 	private:
 		// Holds all currently active states
 		std::stack<State*> m_StateStack;
+		// Window to draw objects to
+		sf::RenderWindow* m_Window;
 	};
 }

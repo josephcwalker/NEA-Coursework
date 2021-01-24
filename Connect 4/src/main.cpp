@@ -4,25 +4,18 @@
 
 #include "Tools/Logger.h"
 
+#include "Program/Program.h"
+#include "Program/States/MainMenuState.h"
+
 int main()
 {
-	Connect::Logger logger("Window");
+	Connect::Logger logger("Connect 4");
 	logger.SetLogLevel(Connect::LOG_LEVEL::TRACE);
 
-	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Hello");
-	if (!window)
-	{
-		LOG_ERROR("Error when creating new SFML render window");
-		return -1;
-	}
+	Connect::Program program(new Connect::MainMenuState());
 
-	LOG_TRACE("Window framerate changed to 60");
-	window->setFramerateLimit(60);
-
-	while (window->isOpen())
-	{
-		window->display();
-	}
+	while (program.isRunning())
+		program.ExecuteFrame();
 
 	return 0;
 }

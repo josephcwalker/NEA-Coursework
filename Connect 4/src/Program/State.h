@@ -1,3 +1,7 @@
+#pragma once
+
+#include <SFML/Graphics.hpp>
+
 namespace Connect
 {
 	// Abstract State class used to allow for polymorphism
@@ -18,5 +22,11 @@ namespace Connect
 		// Used to draw all the objects in the state will be run every frame
 		// Unless there is an optimization but this will be hard to communicate with main.cpp
 		virtual void Draw() = 0;
+
+		// Used to give this state the handle to the window to draw stuff
+		inline void SetWindow(sf::RenderWindow* window) { m_Window = window; }
+	
+	protected:
+		static sf::RenderWindow* m_Window;
 	};
 }
