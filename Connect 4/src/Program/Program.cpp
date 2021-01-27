@@ -16,10 +16,6 @@ namespace Connect
 		else
 			s_Instance = this;
 
-		LOG_TRACE("New Program object created");
-
-		m_StateStack.push(initialState);
-
 		// Create Window and give pointer to it for all states
 		LOG_TRACE("New Window created");
 
@@ -34,6 +30,9 @@ namespace Connect
 			LOG_TRACE("Window framerate changed to 60");
 			m_Window->setFramerateLimit(60);
 			initialState->SetWindow(m_Window);
+
+			LOG_TRACE("New Program object created");
+			PushState(initialState);
 		}
 	}
 
@@ -65,7 +64,22 @@ namespace Connect
 	{
 		m_StateStack.top()->Execute();
 
-		m_Window->clear(sf::Color(0x00000000));
+		// Handle Input
+		sf::Event e;
+		while (m_Window->pollEvent(e))
+		{
+			switch (e.type)
+			{
+			case sf::Event::Closed:
+				LOG_TRACE("Window Close callback called");
+				// Use the current states close method
+				break;
+			default:
+				break;
+			}
+		}
+
+		m_Window->clear(sf::Color(0x121212FF));
 		m_StateStack.top()->Draw();
 		m_Window->display();
 	}

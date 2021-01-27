@@ -19,6 +19,8 @@ project "Connect 4"
 	targetdir "bin/%{cfg.buildcfg}"
 	objdir "bin/%{cfg.buildcfg}-obj"
 
+	debugdir "%{prj.name}/"
+
 	files
 	{
 		"%{prj.name}/src/**.cpp"
@@ -32,7 +34,8 @@ project "Connect 4"
 
 	libdirs
 	{
-		"%{prj.name}/vendor/SFML/lib"
+		"%{prj.name}/vendor/SFML/lib",
+		"%{prj.name}/vendor/Freetype/release static/win64"
 	}
 
 	defines "SFML_STATIC"
@@ -43,6 +46,7 @@ project "Connect 4"
 		"sfml-window-s",
 		"sfml-system-s",
 		"opengl32",
+		"freetype",
 		"winmm",
 		"gdi32"
 	}
