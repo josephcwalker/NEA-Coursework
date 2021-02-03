@@ -8,7 +8,7 @@ namespace Connect
 	Title::Title(sf::Vector2f position, std::string text)
 	{
 		LOG_TRACE("Loading font from file");
-		if (!m_Font.loadFromFile("Connect 4/res/font/Calibri-Regular.ttf"))
+		if (!m_Font.loadFromFile("res/font/Calibri-Regular.ttf"))
 		{
 			LOG_ERROR("Error whilst loading font from file");
 		}

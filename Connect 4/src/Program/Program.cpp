@@ -19,7 +19,7 @@ namespace Connect
 		// Create Window and give pointer to it for all states
 		LOG_TRACE("New Window created");
 
-		m_Window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Connect 4 With AI", sf::Style::Default);
+		m_Window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Connect 4 With AI", sf::Style::Titlebar | sf::Style::Close);
 
 		if (!m_Window)
 		{
@@ -40,6 +40,8 @@ namespace Connect
 	{
 		while (!m_StateStack.empty())
 			PopState();
+		
+		m_Window->close();
 		
 		LOG_TRACE("Removed all states from stack");
 		LOG_TRACE("Called Program destructor");
@@ -80,7 +82,8 @@ namespace Connect
 		}
 
 		m_Window->clear(sf::Color(0x121212FF));
-		m_StateStack.top()->Draw();
+		if (!m_StateStack.empty())
+			m_StateStack.top()->Draw();
 		m_Window->display();
 	}
 }

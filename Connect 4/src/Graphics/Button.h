@@ -3,18 +3,24 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 
+#include "Program/State.h"
+
 namespace Connect
 {
+	typedef void (State::*onClickFunction)();
+
 	class Button : public sf::Drawable
 	{
 	public:
-		Button(sf::Vector2f position = sf::Vector2f(0.0f, 0.0f), sf::Vector2f size = sf::Vector2f(100.0f, 100.0f), std::string text = "Default Text");
+		Button(onClickFunction function, State* parentState, std::string text = "Default Text");
 		virtual ~Button();
 
 	public:
 		void SetPosition(sf::Vector2f position);
 		void SetSize(sf::Vector2f size);
 		void SetText(std::string text);
+
+		void OnMouseUpdate(sf::RenderWindow* window);
 
 	private:
 		// Override draw method to draw both rect and text
@@ -28,5 +34,9 @@ namespace Connect
 		sf::Text m_Text;
 
 		sf::Font m_Font;
+
+	public:
+		onClickFunction m_ClickFunction = nullptr;
+		State* m_ParentState = nullptr;
 	};
 }

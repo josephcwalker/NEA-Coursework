@@ -1,22 +1,24 @@
 #include "Button.h"
 
-#include <algorithm>
+#include <functional>
 
 #include "Tools/Logger.h"
+#include "Program/Program.h"
 
 namespace Connect
 {
-	Button::Button(sf::Vector2f position, sf::Vector2f size, std::string text)
+	Button::Button(onClickFunction function, State *parentState, std::string text)
+		: m_ClickFunction(function), m_ParentState(parentState)
 	{
 		LOG_TRACE("Loading font from file");
-		if (!m_Font.loadFromFile("Connect 4/res/font/Calibri-Regular.ttf"))
+		if (!m_Font.loadFromFile("res/font/Calibri-Regular.ttf"))
 		{
 			LOG_ERROR("Error whilst loading font from file");
 		}
 
 		m_Rect.setFillColor(sf::Color(0x5E1F8DFF));
-		m_Rect.setPosition(position);
-		m_Rect.setSize(size);
+		m_Rect.setPosition(sf::Vector2f(0.0f, 0.0f));
+		m_Rect.setSize(sf::Vector2f(100.0f, 100.0f));
 
 		m_Text.setFont(m_Font);
 		m_Text.setString(text);
@@ -49,6 +51,31 @@ namespace Connect
 	{
 		m_Text.setString(text);
 		CenterText();
+	}
+
+	void Button::OnMouseUpdate(sf::RenderWindow* window)
+	{
+		// Reset to default colour
+		m_Rect.setFillColor(sf::Color(0x5E1F8DFF));
+
+		// Check mouse is inside rectangle
+		bool mouseInside = m_Rect.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)));
+		if (!mouseInside)
+			return;
+
+		// Mouse hover colour
+		m_Rect.setFillColor(sf::Color(0x6E2F9DFF));
+
+		// Change state depending on what the button should do
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+		{
+			// Temporary Code
+			// Need to find way to change function depending on what button it is
+			// Maybe pass function as argument to object then call that custom function
+			// Program::s_Instance->PopState();
+
+			std::invoke(m_ClickFunction, *m_ParentState);
+		}
 	}
 
 	void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const

@@ -13,7 +13,13 @@ namespace Connect
 	class MainMenuState : public State
 	{
 	public:
-		MainMenuState() {}
+		MainMenuState()
+			: m_ExitButton(onClickFunction(ExitButtonFunction), this),
+			  m_PlayButton(onClickFunction(PlayButtonFunction), this),
+			  m_AccountsButton(onClickFunction(AccountsButtonFunction), this),
+			  m_LeaderboardButton(onClickFunction(LeaderboardButtonFunction), this)
+		{}
+
 		~MainMenuState() {}
 
 	public:
@@ -42,7 +48,10 @@ namespace Connect
 
 		void Execute() override
 		{
-
+			m_ExitButton.OnMouseUpdate(m_Window);
+			m_PlayButton.OnMouseUpdate(m_Window);
+			m_AccountsButton.OnMouseUpdate(m_Window);
+			m_LeaderboardButton.OnMouseUpdate(m_Window);
 		}
 
 		void Draw() override
@@ -54,6 +63,13 @@ namespace Connect
 
 			m_Window->draw(m_Title);
 		}
+
+	// Button Functions
+	public:
+		void ExitButtonFunction() { Program::s_Instance->PopState(); }
+		void PlayButtonFunction() { Program::s_Instance->PopState(); }
+		void AccountsButtonFunction() { Program::s_Instance->PopState(); }
+		void LeaderboardButtonFunction() { Program::s_Instance->PopState(); }
 
 	private:
 		Button m_ExitButton;

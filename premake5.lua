@@ -19,6 +19,9 @@ project "Connect 4"
 	targetdir "bin/%{cfg.buildcfg}"
 	objdir "bin/%{cfg.buildcfg}-obj"
 
+	systemversion "latest"
+	cppdialect "C++17"
+
 	debugdir "%{prj.name}/"
 
 	files
