@@ -25,6 +25,10 @@ namespace Connect
 
 		// Used to give this state the handle to the window to draw stuff
 		inline void SetWindow(sf::RenderWindow* window) { m_Window = window; }
+
+	// Common Button Functions
+	protected:
+		void PopState();
 	
 	protected:
 		static sf::RenderWindow* m_Window;

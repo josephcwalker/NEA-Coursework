@@ -6,7 +6,7 @@
 #include "Graphics/Button.h"
 #include "Graphics/Title.h"
 
-#include <SFML/Graphics.hpp>
+#include "AccountsState.h"
 
 namespace Connect
 {
@@ -20,7 +20,7 @@ namespace Connect
 			  m_LeaderboardButton(onClickFunction(LeaderboardButtonFunction), this)
 		{}
 
-		~MainMenuState() {}
+		virtual ~MainMenuState() {}
 
 	public:
 		void Initialize() override
@@ -65,10 +65,10 @@ namespace Connect
 		}
 
 	// Button Functions
-	public:
+	private:
 		void ExitButtonFunction() { Program::s_Instance->PopState(); }
 		void PlayButtonFunction() { Program::s_Instance->PopState(); }
-		void AccountsButtonFunction() { Program::s_Instance->PopState(); }
+		void AccountsButtonFunction() { Program::s_Instance->PushState(new AccountsState()); }
 		void LeaderboardButtonFunction() { Program::s_Instance->PopState(); }
 
 	private:
