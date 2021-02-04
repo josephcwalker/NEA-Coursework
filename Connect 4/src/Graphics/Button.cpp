@@ -67,13 +67,9 @@ namespace Connect
 		m_Rect.setFillColor(sf::Color(0x6E2F9DFF));
 
 		// Change state depending on what the button should do
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+		if (Program::s_Instance->WasMousePressed())
 		{
-			// Temporary Code
-			// Need to find way to change function depending on what button it is
-			// Maybe pass function as argument to object then call that custom function
-			// Program::s_Instance->PopState();
-
+			// Call whatever function this button is linked to
 			std::invoke(m_ClickFunction, *m_ParentState);
 		}
 	}

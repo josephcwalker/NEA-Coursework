@@ -30,6 +30,8 @@ namespace Connect
 		// Program will be locked at 60fps so 1/60 is the time between frames
 		void ExecuteFrame();
 
+		inline bool WasMousePressed() { return m_WasMousePressed; }
+
 	public:
 		static Program* s_Instance;
 
@@ -38,5 +40,7 @@ namespace Connect
 		std::stack<State*> m_StateStack;
 		// Window to draw objects to
 		sf::RenderWindow* m_Window;
+
+		bool m_WasMousePressed = false;
 	};
 }

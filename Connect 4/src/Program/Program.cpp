@@ -72,7 +72,7 @@ namespace Connect
 
 	void Program::ExecuteFrame()
 	{
-		m_StateStack.top()->Execute();
+		m_WasMousePressed = false;
 
 		// Handle Input
 		sf::Event e;
@@ -85,11 +85,15 @@ namespace Connect
 				if (dynamic_cast<ConfirmExitState*>(m_StateStack.top()) == NULL)
 					PushState(new ConfirmExitState());
 				break;
-			default:
+			case sf::Event::MouseButtonPressed:
+				LOG_TRACE("Mouse Button Pressed Event Occurred");
+				m_WasMousePressed = true;
 				break;
 			}
 		}
 
+		// Execute, Draw, Display cycle
+		m_StateStack.top()->Execute();
 		m_Window->clear(sf::Color(0x121212FF));
 		if (!m_StateStack.empty())
 			m_StateStack.top()->Draw();
