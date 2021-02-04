@@ -1,6 +1,7 @@
 #include "Program.h"
 
 #include "Tools/Logger.h"
+#include "States/ConfirmExitState.h"
 
 namespace Connect
 {
@@ -62,6 +63,13 @@ namespace Connect
 		m_StateStack.pop();
 	}
 
+	void Program::RemoveAllStates()
+	{
+		LOG_TRACE("Removing all States");
+		while (isRunning())
+			PopState();
+	}
+
 	void Program::ExecuteFrame()
 	{
 		m_StateStack.top()->Execute();
@@ -74,7 +82,8 @@ namespace Connect
 			{
 			case sf::Event::Closed:
 				LOG_TRACE("Window Close callback called");
-				// Use the current states close method
+				if (dynamic_cast<ConfirmExitState*>(m_StateStack.top()) == NULL)
+					PushState(new ConfirmExitState());
 				break;
 			default:
 				break;

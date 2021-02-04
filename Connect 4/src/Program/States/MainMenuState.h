@@ -14,13 +14,15 @@ namespace Connect
 	{
 	public:
 		MainMenuState()
-			: m_ExitButton(onClickFunction(ExitButtonFunction), this),
+			: m_ExitButton(State::PushConfirmExitState, this),
 			  m_PlayButton(onClickFunction(PlayButtonFunction), this),
 			  m_AccountsButton(onClickFunction(AccountsButtonFunction), this),
 			  m_LeaderboardButton(onClickFunction(LeaderboardButtonFunction), this)
-		{}
+		{
+			LOG_TRACE("Created Main Menu State");
+		}
 
-		virtual ~MainMenuState() {}
+		virtual ~MainMenuState() { LOG_TRACE("Deleting Main Menu State"); }
 
 	public:
 		void Initialize() override
@@ -66,10 +68,10 @@ namespace Connect
 
 	// Button Functions
 	private:
-		void ExitButtonFunction() { Program::s_Instance->PopState(); }
-		void PlayButtonFunction() { Program::s_Instance->PopState(); }
-		void AccountsButtonFunction() { Program::s_Instance->PushState(new AccountsState()); }
-		void LeaderboardButtonFunction() { Program::s_Instance->PopState(); }
+		void ExitButtonFunction() { LOG_TRACE("Exit Button Pressed"); Program::s_Instance->PopState(); }
+		void PlayButtonFunction() { LOG_TRACE("Play Button Pressed"); Program::s_Instance->PopState(); }
+		void AccountsButtonFunction() { LOG_TRACE("Accounts Button Pressed"); Program::s_Instance->PushState(new AccountsState()); }
+		void LeaderboardButtonFunction() { LOG_TRACE("Leaderboard Button Pressed"); Program::s_Instance->PopState(); }
 
 	private:
 		Button m_ExitButton;

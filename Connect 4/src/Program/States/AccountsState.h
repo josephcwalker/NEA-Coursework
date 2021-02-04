@@ -13,8 +13,10 @@ namespace Connect
 	public:
 		AccountsState()
 			: m_BackButton(State::PopState, this)
-		{}
-		virtual ~AccountsState() {}
+		{
+			LOG_TRACE("Created Accounts State");
+		}
+		virtual ~AccountsState() { LOG_TRACE("Deleting Accounts State"); }
 
 	public:
 		void Initialize() override

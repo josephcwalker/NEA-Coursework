@@ -29,6 +29,8 @@ namespace Connect
 	// Common Button Functions
 	protected:
 		void PopState();
+		void RemoveAllStates();
+		void PushConfirmExitState();
 	
 	protected:
 		static sf::RenderWindow* m_Window;

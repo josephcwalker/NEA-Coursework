@@ -20,6 +20,8 @@ namespace Connect
 		void PushState(State* newState);
 		void PopState();
 
+		void RemoveAllStates();
+
 		// Useful methods
 		inline State* Top() { return m_StateStack.top(); }
 		inline bool isRunning() { return !m_StateStack.empty(); }
