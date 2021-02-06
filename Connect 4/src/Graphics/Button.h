@@ -35,8 +35,6 @@ namespace Connect
 		sf::RectangleShape m_Rect;
 		sf::Text m_Text;
 
-		sf::Font m_Font;
-
 	public:
 		onClickFunction m_ClickFunction = nullptr;
 		State* m_ParentState = nullptr;

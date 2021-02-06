@@ -4,7 +4,7 @@
 #include "../State.h"
 
 #include "Graphics/Button.h"
-#include "Graphics/Title.h"
+#include "Graphics/Text.h"
 
 namespace Connect
 {
@@ -30,9 +30,9 @@ namespace Connect
 			m_CancelButton.SetSize(sf::Vector2f(220.0f, 100.0f));
 			m_CancelButton.SetText("Cancel");
 
-			m_Title.SetText(" Are You Sure You\nWould Like to Exit\n    the Program?");
-			m_Title.SetCharacterSize(48);
 			m_Title.SetPosition(sf::Vector2f(470.0f, 50.0f));
+			m_Title.SetCharacterSize(48);
+			m_Title.SetText(" Are You Sure You\nWould Like to Exit\n    the Program?");
 		}
 
 		void Execute() override
@@ -52,6 +52,6 @@ namespace Connect
 		Button m_ExitProgramButton;
 		Button m_CancelButton;
 
-		Title m_Title;
+		Text m_Title;
 	};
 }

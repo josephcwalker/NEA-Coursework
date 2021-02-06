@@ -10,17 +10,11 @@ namespace Connect
 	Button::Button(onClickFunction function, State *parentState, std::string text)
 		: m_ClickFunction(function), m_ParentState(parentState)
 	{
-		LOG_TRACE("Loading font from file");
-		if (!m_Font.loadFromFile("res/font/Calibri-Regular.ttf"))
-		{
-			LOG_ERROR("Error whilst loading font from file");
-		}
-
 		m_Rect.setFillColor(sf::Color(0x5E1F8DFF));
 		m_Rect.setPosition(sf::Vector2f(0.0f, 0.0f));
 		m_Rect.setSize(sf::Vector2f(100.0f, 100.0f));
 
-		m_Text.setFont(m_Font);
+		m_Text.setFont(*Program::s_Font);
 		m_Text.setString(text);
 		m_Text.setCharacterSize(24);
 		m_Text.setFillColor(sf::Color(0xD9D9D9FF));

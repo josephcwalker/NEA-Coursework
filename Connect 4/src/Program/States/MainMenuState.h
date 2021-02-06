@@ -4,7 +4,7 @@
 #include "../State.h"
 
 #include "Graphics/Button.h"
-#include "Graphics/Title.h"
+#include "Graphics/Text.h"
 
 #include "AccountsState.h"
 
@@ -43,9 +43,9 @@ namespace Connect
 			m_LeaderboardButton.SetSize(sf::Vector2f(400.0f, 75.0f));
 			m_LeaderboardButton.SetText("Leaderboard");
 
-			m_Title.SetText("  Connect 4 with\nMachine Learning");
-			m_Title.SetCharacterSize(48);
 			m_Title.SetPosition(sf::Vector2f(470.0f, 50.0f));
+			m_Title.SetCharacterSize(48);
+			m_Title.SetText("  Connect 4 with\nMachine Learning");
 		}
 
 		void Execute() override
@@ -68,7 +68,6 @@ namespace Connect
 
 	// Button Functions
 	private:
-		void ExitButtonFunction() { LOG_TRACE("Exit Button Pressed"); Program::s_Instance->PopState(); }
 		void PlayButtonFunction() { LOG_TRACE("Play Button Pressed"); Program::s_Instance->PopState(); }
 		void AccountsButtonFunction() { LOG_TRACE("Accounts Button Pressed"); Program::s_Instance->PushState(new AccountsState()); }
 		void LeaderboardButtonFunction() { LOG_TRACE("Leaderboard Button Pressed"); Program::s_Instance->PopState(); }
@@ -79,6 +78,6 @@ namespace Connect
 		Button m_AccountsButton;
 		Button m_LeaderboardButton;
 
-		Title m_Title;
+		Text m_Title;
 	};
 }

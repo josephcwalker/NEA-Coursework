@@ -6,11 +6,11 @@
 
 namespace Connect
 {
-	class Title : public sf::Drawable
+	class Text : public sf::Drawable
 	{
 	public:
-		Title(sf::Vector2f position = sf::Vector2f(0.0f, 0.0f), std::string text = "Default Text");
-		virtual ~Title();
+		Text(sf::Vector2f position = sf::Vector2f(0.0f, 0.0f), std::string text = "Default Text");
+		virtual ~Text();
 
 	public:
 		void SetPosition(sf::Vector2f position);
@@ -23,7 +23,5 @@ namespace Connect
 
 	private:
 		sf::Text m_Text;
-
-		sf::Font m_Font;
 	};
 }

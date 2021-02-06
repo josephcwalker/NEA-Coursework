@@ -12,7 +12,7 @@ namespace Connect
 	class Program
 	{
 	public:
-		Program(State* initialState);
+		Program();
 		virtual ~Program();
 
 	public:
@@ -35,6 +35,9 @@ namespace Connect
 	public:
 		static Program* s_Instance;
 
+		// Global Font for all objects to use
+		static sf::Font* s_Font;
+
 	private:
 		// Holds all currently active states
 		std::stack<State*> m_StateStack;
@@ -42,5 +45,9 @@ namespace Connect
 		sf::RenderWindow* m_Window;
 
 		bool m_WasMousePressed = false;
+
+		// Number of times PopState was called
+		// Used after to keep variables in memory
+		int m_StatesToPop = 0;
 	};
 }

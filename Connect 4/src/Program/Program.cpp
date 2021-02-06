@@ -6,8 +6,9 @@
 namespace Connect
 {
 	Program* Program::s_Instance = nullptr;
+	sf::Font* Program::s_Font = nullptr;
 
-	Program::Program(State* initialState)
+	Program::Program()
 	{
 		if (s_Instance)
 		{
@@ -30,10 +31,12 @@ namespace Connect
 		{
 			LOG_TRACE("Window framerate changed to 60");
 			m_Window->setFramerateLimit(60);
-			initialState->SetWindow(m_Window);
 
-			LOG_TRACE("New Program object created");
-			PushState(initialState);
+			// Load global font
+			s_Font = new sf::Font();
+			LOG_TRACE("Loading Font From File");
+			if (!s_Font->loadFromFile("res/font/Calibri-Regular.ttf"))
+				LOG_ERROR("Error whilst loading font from file");
 		}
 	}
 
@@ -50,6 +53,7 @@ namespace Connect
 
 	void Program::PushState(State* newState)
 	{
+		newState->SetWindow(m_Window);
 		LOG_TRACE("Added new state to top of state stack");
 		m_StateStack.push(newState);
 		LOG_TRACE("Initialized new state");
@@ -58,20 +62,34 @@ namespace Connect
 
 	void Program::PopState()
 	{
-		LOG_TRACE("Deleting current state and removing from stack");
-		delete m_StateStack.top();
-		m_StateStack.pop();
+		m_StatesToPop++;
 	}
 
 	void Program::RemoveAllStates()
 	{
-		LOG_TRACE("Removing all States");
-		while (isRunning())
-			PopState();
+		m_StatesToPop = -1;
 	}
 
 	void Program::ExecuteFrame()
 	{
+		m_StateStack.top()->Execute();
+
+		// Pop required states
+		if (m_StatesToPop == -1)
+		{
+			LOG_TRACE("Removing all States");
+			m_StatesToPop = m_StateStack.size();
+		}
+		
+		for (int i = 0; i < m_StatesToPop; i++)
+		{
+			LOG_TRACE("Deleting current state and removing from stack");
+			delete m_StateStack.top();
+			m_StateStack.pop();
+		}
+
+		m_StatesToPop = 0;
+
 		m_WasMousePressed = false;
 
 		// Handle Input
@@ -92,8 +110,7 @@ namespace Connect
 			}
 		}
 
-		// Execute, Draw, Display cycle
-		m_StateStack.top()->Execute();
+		// Clear, Draw, Display cycle
 		m_Window->clear(sf::Color(0x121212FF));
 		if (!m_StateStack.empty())
 			m_StateStack.top()->Draw();
