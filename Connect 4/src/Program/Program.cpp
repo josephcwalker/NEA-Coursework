@@ -7,6 +7,8 @@ namespace Connect
 {
 	Program* Program::s_Instance = nullptr;
 	sf::Font* Program::s_Font = nullptr;
+	long Program::s_FrameCount = 0;
+	sf::Keyboard::Key Program::s_KeyPressed = sf::Keyboard::Unknown;
 
 	Program::Program()
 	{
@@ -91,6 +93,7 @@ namespace Connect
 		m_StatesToPop = 0;
 
 		m_WasMousePressed = false;
+		s_KeyPressed = sf::Keyboard::Key::Unknown;
 
 		// Handle Input
 		sf::Event e;
@@ -107,6 +110,10 @@ namespace Connect
 				LOG_TRACE("Mouse Button Pressed Event Occurred");
 				m_WasMousePressed = true;
 				break;
+			case sf::Event::KeyPressed:
+				LOG_TRACE("Key Press Event Occurred");
+				s_KeyPressed = e.key.code;
+				break;
 			}
 		}
 
@@ -115,5 +122,7 @@ namespace Connect
 		if (!m_StateStack.empty())
 			m_StateStack.top()->Draw();
 		m_Window->display();
+
+		s_FrameCount++;
 	}
 }
