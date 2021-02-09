@@ -38,9 +38,6 @@ namespace Connect
 		// Global Font for all objects to use
 		static sf::Font* s_Font;
 
-		// Number of frames since start of program
-		static long s_FrameCount;
-
 		static sf::Keyboard::Key s_KeyPressed;
 
 	private:

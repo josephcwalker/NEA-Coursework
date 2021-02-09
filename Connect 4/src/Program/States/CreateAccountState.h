@@ -45,9 +45,9 @@ namespace Connect
 			m_Title.SetCharacterSize(48);
 			m_Title.SetText("Create an Account");
 
-			m_ErrorMessages.SetPosition(sf::Vector2f(50.0f, 500.0f));
-			m_ErrorMessages.SetCharacterSize(18);
-			m_ErrorMessages.SetText("");
+			m_Messages.SetPosition(sf::Vector2f(50.0f, 500.0f));
+			m_Messages.SetCharacterSize(18);
+			m_Messages.SetText("");
 		}
 
 		void Execute() override
@@ -71,12 +71,15 @@ namespace Connect
 			m_Window->draw(m_PasswordInput);
 
 			m_Window->draw(m_Title);
-			m_Window->draw(m_ErrorMessages);
+			m_Window->draw(m_Messages);
 		}
 
 	// Button Functions
 	private:
 		void CreateAccountButtonFunction();
+
+		void EnterDataIntoFile();
+		std::string CheckInputsAreValid();
 
 	private:
 		Button m_BackButton;
@@ -86,6 +89,6 @@ namespace Connect
 		TextInput m_PasswordInput;
 
 		Text m_Title;
-		Text m_ErrorMessages;
+		Text m_Messages;
 	};
 }

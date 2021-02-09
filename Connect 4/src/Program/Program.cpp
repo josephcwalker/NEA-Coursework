@@ -7,7 +7,6 @@ namespace Connect
 {
 	Program* Program::s_Instance = nullptr;
 	sf::Font* Program::s_Font = nullptr;
-	long Program::s_FrameCount = 0;
 	sf::Keyboard::Key Program::s_KeyPressed = sf::Keyboard::Unknown;
 
 	Program::Program()
@@ -122,7 +121,5 @@ namespace Connect
 		if (!m_StateStack.empty())
 			m_StateStack.top()->Draw();
 		m_Window->display();
-
-		s_FrameCount++;
 	}
 }

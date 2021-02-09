@@ -23,6 +23,8 @@ namespace Connect
 		void KeyboardEvent();
 		void OnMouseUpdate(sf::RenderWindow *window);
 
+		inline const std::string& GetInput() { return m_UserInput; }
+
 	private:
 		// Override draw method to draw both rect and text
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const;

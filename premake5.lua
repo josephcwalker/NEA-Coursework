@@ -45,6 +45,7 @@ project "Connect 4"
 
 	links
 	{
+		"stdc++fs",
 		"sfml-graphics-s",
 		"sfml-window-s",
 		"sfml-system-s",
