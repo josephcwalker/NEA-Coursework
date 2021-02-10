@@ -7,6 +7,7 @@
 #include "Graphics/Text.h"
 
 #include "CreateAccountState.h"
+#include "DeleteAccountState.h"
 
 namespace Connect
 {
@@ -66,7 +67,7 @@ namespace Connect
 	// Button Functions
 	private:
 		void CreateAccountButtonFunction() { LOG_TRACE("Create Account Button Pressed"); Program::s_Instance->PushState(new CreateAccountState()); }
-		void DeleteAccountButtonFunction() { LOG_TRACE("Delete Account Button Pressed"); Program::s_Instance->PopState(); }
+		void DeleteAccountButtonFunction() { LOG_TRACE("Delete Account Button Pressed"); Program::s_Instance->PushState(new DeleteAccountState()); }
 
 	private:
 		Button m_BackButton;
