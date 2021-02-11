@@ -1,5 +1,7 @@
 #include "DeleteAccountState.h"
 
+#include "Program/Account.h"
+
 #include <filesystem>
 #include <fstream>
 #include <cstring>
@@ -41,37 +43,11 @@ std::string Connect::DeleteAccountState::CheckInputsAreValid()
 		error_message += "Please enter a password";
 	else
 	{
-		std::ifstream file("saves/" + m_UsernameInput.GetInput() + "/accountData.bin", std::ios::binary);
+		// Check if password matches
+		Account account("saves/" + m_UsernameInput.GetInput() + "/accountData.bin");
 
-		if (!file.is_open())
-			LOG_ERROR("File did not open when deleting account");
-
-		// Read size of metadata and username size
-		size_t* bytesInMetadata = new size_t();
-		file.read((char*)bytesInMetadata, 4);
-		unsigned int* usernameSize = new unsigned int();
-		file.read((char*)usernameSize, 4);
-
-		// Read password size
-		unsigned int* passwordSize = new unsigned int();
-		file.read((char*)passwordSize, 4);
-
-		// Navigate to password and read
-		char* password = new char[*passwordSize + 1];
-		file.seekg(*bytesInMetadata + *usernameSize);
-		file.read(password, *passwordSize);
-		password[*passwordSize] = '\0';
-
-		file.close();
-
-		if (strcmp(m_PasswordInput.GetInput().c_str(), password) != 0)
+		if (!account.PasswordMatches(m_PasswordInput.GetInput() + '\0'))
 			error_message += "Incorrect password\n";
-
-		// Clean up - maybe replace with smart pointers
-		delete bytesInMetadata;
-		delete usernameSize;
-		delete passwordSize;
-		delete[] password;
 	}
 
 	return error_message;

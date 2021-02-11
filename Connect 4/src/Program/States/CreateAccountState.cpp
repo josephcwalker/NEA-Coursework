@@ -1,5 +1,7 @@
 #include "CreateAccountState.h"
 
+#include "Program/Account.h"
+
 #include <filesystem>
 #include <fstream>
 #include <cstring>
@@ -31,42 +33,8 @@ void Connect::CreateAccountState::CreateAccountButtonFunction()
 
 void Connect::CreateAccountState::EnterDataIntoFile()
 {
-	// Open File
-	std::filesystem::create_directories("saves/" + m_UsernameInput.GetInput());
-	std::ofstream userFile("saves/" + m_UsernameInput.GetInput() + "/accountData.bin", std::ios::binary);
-
-	// Problem! To write to a binary file and keep 4 byte long numberse
-	// Must save number as a lvalue and then write that
-	// Find a workaround
-
-	// ----------- Write Metadata -----------
-	int sizeOfMetadata = 12; // + neural network metadata
-	userFile.write(reinterpret_cast<const char *>(&sizeOfMetadata), 4);
-
-	int sizeOfUsername = m_UsernameInput.GetInput().size();
-	userFile.write(reinterpret_cast<const char*>(&sizeOfUsername), 4);
-
-	int sizeOfPassword = m_PasswordInput.GetInput().size();
-	userFile.write(reinterpret_cast<const char *>(&sizeOfPassword), 4); // TODO: store digest size of SHA-1
-
-	// userFile << neural network metadata
-
-	// ----------- Write header -----------
-	userFile.write(m_UsernameInput.GetInput().c_str(), sizeOfUsername);
-	userFile.write(m_PasswordInput.GetInput().c_str(), sizeOfPassword); // TODO: Hash this using SHA-1
-
-	time_t currentTime = time(nullptr);
-	userFile.write(reinterpret_cast<const char*>(&time), sizeof(time_t));
-
-	// Write human and AI wins and losses
-	int zero = 0;
-	for (int i = 0; i < 4; i++)
-		userFile.write(reinterpret_cast<const char*>(&zero), 4);
-
-	// userFile << neural network data
-
-	// Close File
-	userFile.close();
+	Account account(m_UsernameInput.GetInput(), m_PasswordInput.GetInput());
+	account.SaveToFile();
 }
 
 std::string Connect::CreateAccountState::CheckInputsAreValid()
