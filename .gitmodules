@@ -1,3 +1,6 @@
 [submodule "Connect 4/vendor/SFML"]
 	path = Connect 4/vendor/SFML
 	url = https://github.com/SFML/SFML.git
+[submodule "Connect 4/vendor/Eigen"]
+	path = Connect 4/vendor/Eigen
+	url = https://github.com/libigl/eigen.git
