@@ -1,5 +1,3 @@
-#include "Tools/Logger.h"
-
 #include <Eigen/Dense>
 
 #include <vector>
@@ -12,27 +10,29 @@ namespace Connect
 	class NeuralNetwork
 	{
 	public:
+		// Random weights and biases
 		NeuralNetwork(std::vector<size_t> layerSizes);
+		// Data from a file
 		NeuralNetwork(std::vector<size_t> layerSizes, char* data);
 		virtual ~NeuralNetwork();
 
 	public:
 
-		Eigen::VectorXf FeedFoward(Eigen::VectorXf& inputVector);
+		Eigen::VectorXf FeedFoward(Eigen::VectorXf inputVector);
 		void Train(std::vector<TrainingExample>& trainingData, float eta);
 
 		BinaryData Serialize();
 
 	private:
-		void RandomIntialize();
+		void RandomInitialize();
 		
 		void Backpropagation(std::vector<Eigen::MatrixXf>& nablaWeights, std::vector<Eigen::VectorXf>& nablaBiases, TrainingExample& example);
 
-		inline Eigen::VectorXf activationFunctionVector(Eigen::VectorXf& vector);
-		inline Eigen::VectorXf activationFunctionPrimeVector(Eigen::VectorXf &vector);
+		Eigen::VectorXf activationFunctionVector(Eigen::VectorXf& vector);
+		Eigen::VectorXf activationFunctionPrimeVector(Eigen::VectorXf& vector);
 
-		inline float activationFunction(float value);
-		inline float activationFunctionPrime(float value);
+		static inline float activationFunction(float value);
+		static inline float activationFunctionPrime(float value);
 
 	private:
 		std::vector<Eigen::MatrixXf> m_Weights;
