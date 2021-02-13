@@ -2,6 +2,8 @@
 
 #include "Tools/Logger.h"
 
+#include "Systems/NeuralNetwork.h"
+
 #include <string>
 
 namespace Connect
@@ -22,7 +24,7 @@ namespace Connect
 	public:
 
 		// Doesn't have to load NN if not necessary
-		// void LoadNeuralNetwork();
+		void LoadNeuralNetwork();
 
 		void SaveToFile();
 
@@ -41,6 +43,6 @@ namespace Connect
 
 		// Used to index navigate straight to where the NN is stored
 		unsigned int m_NNOffset;
-		// Neural Network object
+		NeuralNetwork* m_NeuralNetwork;
 	};
 }

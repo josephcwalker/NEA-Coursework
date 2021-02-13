@@ -20,7 +20,7 @@ namespace Connect
 		RandomInitialize();
 	}
 
-	NeuralNetwork::NeuralNetwork(std::vector<size_t> layerSizes, char* data)
+	NeuralNetwork::NeuralNetwork(std::vector<unsigned int> &layerSizes, std::shared_ptr<char[]> data)
 	{
 
 	}
@@ -51,14 +51,64 @@ namespace Connect
 		return inputVector;
 	}
 
-	void NeuralNetwork::Train(std::vector<TrainingExample> &trainingData, float eta)
+	BinaryData NeuralNetwork::Serialize()
+	{
+		// Serializes the neural network weights and biases
+		// into a byte array to be stored in accountData.bin
+
+		size_t numberOfBytes = 0;
+
+		// For each layer count number of bytes used
+		for (int i = 0; i < m_Weights.size(); i++)
+		{
+			numberOfBytes += sizeof(float) * m_Weights[i].rows() * m_Weights[i].cols();
+			numberOfBytes += sizeof(float) * m_Biases[i].rows();
+		}
+
+		std::shared_ptr<char[]> data(new char[numberOfBytes]);
+		char* pointer = data.get();;
+
+		// For each layer save weights and biases in data array
+		for (int i = 0; i < m_Weights.size(); i++)
+		{
+			int previousNeurons = m_Weights[i].cols();
+			int currentNeurons = m_Weights[i].rows();
+
+			// For each column read every row into array
+			for (int j = 0; j < previousNeurons; j++)
+			{
+				memcpy(pointer, &m_Weights[i].col(j)[0], currentNeurons * sizeof(float));
+				pointer += currentNeurons * sizeof(float);
+			}
+
+			// Save bias vector in data array
+			memcpy(pointer, &m_Biases[i][0], currentNeurons * sizeof(float));
+			pointer += currentNeurons * sizeof(float);
+		}
+
+		LOG_TRACE("Serialized neural network data");
+
+		return BinaryData(data, numberOfBytes);
+	}
+
+	std::vector<unsigned int> NeuralNetwork::GetLayerSizes()
+	{
+		std::vector<unsigned int> layerSizes(m_Weights.size() + 1);
+		for (int i = 0; i < m_Weights.size(); i++)
+			layerSizes[i + 1] = m_Weights[i].rows();
+		layerSizes[0] = m_Weights[0].cols();
+
+		return layerSizes;
+	}
+
+	void NeuralNetwork::Train(std::vector<TrainingExample>& trainingData, float eta)
 	{
 
 	}
 
-	BinaryData NeuralNetwork::Serialize()
+	void NeuralNetwork::Backpropagation(std::vector<Eigen::MatrixXf>& nablaWeights, std::vector<Eigen::VectorXf>& nablaBiases, TrainingExample& example)
 	{
-		return BinaryData();
+
 	}
 
 	void NeuralNetwork::RandomInitialize()
@@ -67,7 +117,7 @@ namespace Connect
 		for (int i = 0; i < m_Weights.size(); i++)
 		{
 			// Initialize between -epsilon and +epsilon
-			float epsilon = sqrt(6 / (m_Weights[i].cols() + m_Weights[i].rows()));
+			float epsilon = sqrt(6.0f / (m_Weights[i].cols() + m_Weights[i].rows()));
 
 			// Set random is in the range [-1, 1]
 			m_Weights[i].setRandom();
@@ -79,11 +129,6 @@ namespace Connect
 		}
 
 		LOG_TRACE("Neural network randomly initialized");
-	}
-
-	void NeuralNetwork::Backpropagation(std::vector<Eigen::MatrixXf> &nablaWeights, std::vector<Eigen::VectorXf> &nablaBiases, TrainingExample &example)
-	{
-
 	}
 
 	Eigen::VectorXf NeuralNetwork::activationFunctionVector(Eigen::VectorXf& vector)

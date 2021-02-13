@@ -19,8 +19,8 @@ void Connect::CreateAccountState::CreateAccountButtonFunction()
 	if (strcmp(error_message.c_str(), "") == 0)
 	{
 		// Create folder and account data file
-		LOG_TRACE("Created account and stored data");
 		EnterDataIntoFile();
+		LOG_TRACE("Created account and stored data");
 		m_Messages.SetText("Successfully created user account " + m_UsernameInput.GetInput());
 	}
 	else
