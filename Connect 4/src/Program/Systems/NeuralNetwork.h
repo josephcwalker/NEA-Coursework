@@ -24,10 +24,11 @@ namespace Connect
 
 		std::vector<unsigned int> GetLayerSizes();
 
-		void Train(std::vector<TrainingExample>& trainingData, float eta);
+		// Returns the accuracy of the network lower = better
+		float Train(std::vector<TrainingExample>& trainingData, float eta);
 
 	private:
-		void Backpropagation(std::vector<Eigen::MatrixXf>& nablaWeights, std::vector<Eigen::VectorXf>& nablaBiases, TrainingExample& example);
+		float Backpropagation(std::vector<Eigen::MatrixXf>& nablaWeights, std::vector<Eigen::VectorXf>& nablaBiases, TrainingExample& example);
 
 		void RandomInitialize();
 

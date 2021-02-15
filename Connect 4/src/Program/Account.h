@@ -28,7 +28,7 @@ namespace Connect
 
 		void SaveToFile();
 
-		inline bool PasswordMatches(std::string testPassword) { return m_Password == testPassword; }
+		inline bool PasswordMatches(std::string testPassword) { return strcmp(m_Password.c_str(), testPassword.c_str()) == 0; }
 		virtual inline const std::string& GetName() const { return m_Name; }
 
 	public:

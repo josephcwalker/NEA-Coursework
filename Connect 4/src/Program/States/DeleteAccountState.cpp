@@ -38,6 +38,9 @@ std::string Connect::DeleteAccountState::CheckInputsAreValid()
 	else if (!std::filesystem::is_directory("saves/" + m_UsernameInput.GetInput()))
 		error_message += "User does not exist\n";
 
+	if (!error_message.empty())
+		return error_message;
+
 	// Check for valid password
 	if (strcmp(m_PasswordInput.GetInput().c_str(), "") == 0)
 		error_message += "Please enter a password";

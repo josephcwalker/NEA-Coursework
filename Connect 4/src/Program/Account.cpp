@@ -17,6 +17,7 @@ namespace Connect
 	}
 
 	Account::Account(std::string filename)
+		: m_NeuralNetwork(nullptr)
 	{
 		// Load the account from the file
 		std::ifstream file(filename, std::ios::binary);
@@ -100,7 +101,7 @@ namespace Connect
 
 		// Load neural network object
 		m_NeuralNetwork = new NeuralNetwork(layerSizes, data);
-		}
+	}
 
 	void Account::SaveToFile()
 	{
