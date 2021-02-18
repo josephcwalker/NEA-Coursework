@@ -42,8 +42,7 @@ namespace Connect
 		bool m_Active = false;
 
 		bool m_PasswordInputField = false;
-
-	public:
+		
 		State* m_ParentState = nullptr;
 	};
 }

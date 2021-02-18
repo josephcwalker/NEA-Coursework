@@ -7,6 +7,7 @@
 #include "Graphics/Text.h"
 
 #include "AccountsState.h"
+#include "LeaderboardState.h"
 
 namespace Connect
 {
@@ -70,7 +71,7 @@ namespace Connect
 	private:
 		void PlayButtonFunction() { LOG_TRACE("Play Button Pressed"); Program::s_Instance->PopState(); }
 		void AccountsButtonFunction() { LOG_TRACE("Accounts Button Pressed"); Program::s_Instance->PushState(new AccountsState()); }
-		void LeaderboardButtonFunction() { LOG_TRACE("Leaderboard Button Pressed"); Program::s_Instance->PopState(); }
+		void LeaderboardButtonFunction() { LOG_TRACE("Leaderboard Button Pressed"); Program::s_Instance->PushState(new LeaderboardState()); }
 
 	private:
 		Button m_ExitButton;

@@ -41,10 +41,13 @@ namespace Connect
 		CenterText();
 	}
 
-	void Button::SetText(std::string text)
+	void Button::SetText(std::string text, bool centerLeft)
 	{
 		m_Text.setString(text);
-		CenterText();
+		if (centerLeft)
+			CenterTextLeft();
+		else
+			CenterText();
 	}
 
 	void Button::OnMouseUpdate(sf::RenderWindow* window)
@@ -64,6 +67,7 @@ namespace Connect
 		if (Program::s_Instance->WasMousePressed())
 		{
 			// Call whatever function this button is linked to
+			m_ParentState->recentButton = this;
 			std::invoke(m_ClickFunction, *m_ParentState);
 		}
 	}
@@ -79,6 +83,15 @@ namespace Connect
 		// Center Text in rectangle due to position being top left corner of object
 		sf::Vector2f textPosition = m_Rect.getPosition() + 0.5f * (m_Rect.getSize() - m_Text.getGlobalBounds().getSize());
 		textPosition.y -= m_Text.getCharacterSize() >> 2;
+		m_Text.setPosition(textPosition);
+	}
+
+	void Button::CenterTextLeft()
+	{
+		// Center Text in rectangle due to position being top left corner of object
+		sf::Vector2f textPosition = m_Rect.getPosition();
+		textPosition.x += 5.0f;
+		textPosition.y += 0.5f * (m_Rect.getSize().y - m_Text.getGlobalBounds().getSize().y) - (m_Text.getCharacterSize() >> 2);
 		m_Text.setPosition(textPosition);
 	}
 }

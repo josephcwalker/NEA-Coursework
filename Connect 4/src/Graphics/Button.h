@@ -20,7 +20,7 @@ namespace Connect
 	public:
 		void SetPosition(sf::Vector2f position);
 		void SetSize(sf::Vector2f size);
-		void SetText(std::string text);
+		void SetText(std::string text, bool centerLeft = false);
 
 		void OnMouseUpdate(sf::RenderWindow* window);
 
@@ -30,6 +30,7 @@ namespace Connect
 
 		// Recenter Text
 		void CenterText();
+		void CenterTextLeft();
 
 	private:
 		sf::RectangleShape m_Rect;
@@ -38,5 +39,7 @@ namespace Connect
 	public:
 		onClickFunction m_ClickFunction = nullptr;
 		State* m_ParentState = nullptr;
+
+		int id = -1;
 	};
 }

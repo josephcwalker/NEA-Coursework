@@ -4,6 +4,8 @@
 
 namespace Connect
 {
+	class Button;
+
 	// Abstract State class used to allow for polymorphism
 	// to store all states in a single data structure easily
 	class State
@@ -34,5 +36,8 @@ namespace Connect
 	
 	protected:
 		static sf::RenderWindow* m_Window;
+
+	public:
+		Button* recentButton = nullptr;
 	};
 }

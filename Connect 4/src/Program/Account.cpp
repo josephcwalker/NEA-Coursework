@@ -146,7 +146,7 @@ namespace Connect
 			file.write(m_Name.c_str(), sizeOfUsername);
 			file.write(m_Password.c_str(), sizeOfPassword); // TODO: Hash this using SHA-1
 
-			file.write(reinterpret_cast<const char *>(&time), sizeof(time_t));
+			file.write(reinterpret_cast<const char *>(&DateCreated), sizeof(time_t));
 		}
 		else
 		{
