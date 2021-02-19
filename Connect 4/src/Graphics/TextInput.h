@@ -20,7 +20,7 @@ namespace Connect
 		void SetSize(sf::Vector2f size);
 		void SetText(std::string text);
 
-		void KeyboardEvent();
+		void KeyboardEvent(void (State::*functionPointer)() = nullptr);
 		void OnMouseUpdate(sf::RenderWindow *window);
 
 		inline const std::string& GetInput() { return m_UserInput; }

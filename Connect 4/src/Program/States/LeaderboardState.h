@@ -76,7 +76,7 @@ namespace Connect
 
 		void Execute() override
 		{
-			m_SearchBar.KeyboardEvent();
+			m_SearchBar.KeyboardEvent(onClickFunction(KeyboardEventCallback));
 			m_SearchBar.OnMouseUpdate(m_Window);
 
 			m_SortByButton.OnMouseUpdate(m_Window);
@@ -105,6 +105,8 @@ namespace Connect
 
 		void UpdateUserButtons();
 
+		void KeyboardEventCallback();
+
 	// Button Functions
 	private:
 		void SortByButtonFunction();
@@ -125,4 +127,7 @@ namespace Connect
 		SortHeuristic m_CurrentHeuristic = SortHeuristic::NAME;
 		bool m_Ascending = true;
 	};
+
+	int LevenshteinDistance(std::string left, std::string right);
+	std::string SoundexConversion(std::string string);
 }

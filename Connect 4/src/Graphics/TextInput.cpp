@@ -48,7 +48,7 @@ namespace Connect
 		CenterTextLeft();
 	}
 
-	void TextInput::KeyboardEvent()
+	void TextInput::KeyboardEvent(void (State::*functionPointer)())
 	{
 		if (!m_Active || Program::s_KeyPressed == sf::Keyboard::Unknown)
 			return;
@@ -65,6 +65,9 @@ namespace Connect
 			m_Text.setString(m_DefaultText + m_UserInput);
 
 		CenterTextLeft();
+
+		if (functionPointer)
+			std::invoke(functionPointer, *m_ParentState);
 	}
 
 	void TextInput::OnMouseUpdate(sf::RenderWindow *window)
