@@ -75,6 +75,12 @@ namespace Connect
 		// Check mouse is inside rectangle
 		bool mouseInside = m_Rect.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)));
 
+		// Nice highlighting for on hover
+		if (mouseInside || m_Active)
+			m_Rect.setFillColor(sf::Color(0x6E2F9DFF));
+		else
+			m_Rect.setFillColor(sf::Color(0x5E1F8DFF));
+
 		// Change state depending on what the button should do
 		if (Program::s_Instance->WasMousePressed())
 		{
