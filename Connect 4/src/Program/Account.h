@@ -43,6 +43,8 @@ namespace Connect
 
 		// Used to index navigate straight to where the NN is stored
 		unsigned int m_NNOffset;
+
+	protected:
 		NeuralNetwork* m_NeuralNetwork;
 	};
 }

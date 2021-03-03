@@ -86,7 +86,7 @@ namespace Connect
 			m_Player2Password.SetSize(sf::Vector2f(550.0f, 60.0f));
 			m_Player2Password.SetText("Password: ");
 
-			m_Player2ErrorMessages.SetPosition(sf::Vector2f(590.0f, 500.0f));
+			m_Player2ErrorMessages.SetPosition(sf::Vector2f(850.0f, 500.0f));
 			m_Player2ErrorMessages.SetCharacterSize(18);
 			m_Player2ErrorMessages.SetText("");
 		}
@@ -146,8 +146,10 @@ namespace Connect
 
 	// Button Functions
 	private:
-	void PlayGameButtonFunction();
 	void AIButtonFunction();
+	void PlayGameButtonFunction();
+
+	std::string CheckInputsAreValid(TextInput &username, TextInput &password, bool AI);
 
 	private:
 		Button m_BackButton;

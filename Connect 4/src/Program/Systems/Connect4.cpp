@@ -11,7 +11,7 @@ namespace Connect
 
 	Connect4::~Connect4() {}
 
-	inline bool Connect4::isValidPosition(int column)
+	bool Connect4::isValidPosition(int column)
 	{
 		// Check whether the chosen column is valid
 		// If the top space in that column is empty then it is valid

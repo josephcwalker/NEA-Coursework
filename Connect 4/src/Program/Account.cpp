@@ -3,7 +3,7 @@
 #include <fstream>
 #include <filesystem>
 
-#define NEURAL_NETWORK_LAYER_SIZES {100, 100, 100}
+#define NEURAL_NETWORK_LAYER_SIZES {42, 16, 8, 7}
 
 namespace Connect
 {
