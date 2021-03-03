@@ -17,6 +17,5 @@ int main()
 
 	while (program.isRunning())
 		program.ExecuteFrame();
-
 	return 0;
 }

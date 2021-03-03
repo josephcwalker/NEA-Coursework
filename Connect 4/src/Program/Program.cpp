@@ -54,11 +54,7 @@ namespace Connect
 
 	void Program::PushState(State* newState)
 	{
-		newState->SetWindow(m_Window);
-		LOG_TRACE("Added new state to top of state stack");
-		m_StateStack.push(newState);
-		LOG_TRACE("Initialized new state");
-		m_StateStack.top()->Initialize();
+		m_StatesToPush.push(newState);
 	}
 
 	void Program::PopState()
@@ -73,23 +69,11 @@ namespace Connect
 
 	void Program::ExecuteFrame()
 	{
+		ExecuteStateChanges();
+
+		if (m_StateStack.empty())
+			return;
 		m_StateStack.top()->Execute();
-
-		// Pop required states
-		if (m_StatesToPop == -1)
-		{
-			LOG_TRACE("Removing all States");
-			m_StatesToPop = m_StateStack.size();
-		}
-		
-		for (int i = 0; i < m_StatesToPop; i++)
-		{
-			LOG_TRACE("Deleting current state and removing from stack");
-			delete m_StateStack.top();
-			m_StateStack.pop();
-		}
-
-		m_StatesToPop = 0;
 
 		m_WasMousePressed = false;
 		s_KeyPressed = sf::Keyboard::Key::Unknown;
@@ -121,5 +105,38 @@ namespace Connect
 		if (!m_StateStack.empty())
 			m_StateStack.top()->Draw();
 		m_Window->display();
+	}
+
+	void Program::ExecuteStateChanges()
+	{
+		// Pop required states
+		if (m_StatesToPop == -1)
+		{
+			LOG_TRACE("Removing all States");
+			m_StatesToPop = m_StateStack.size();
+		}
+
+		for (int i = 0; i < m_StatesToPop; i++)
+		{
+			LOG_TRACE("Deleting current state and removing from stack");
+			delete m_StateStack.top();
+			m_StateStack.pop();
+		}
+
+		m_StatesToPop = 0;
+
+		// Push new states
+		while (!m_StatesToPush.empty())
+		{
+			State* newState = m_StatesToPush.front();
+			newState->SetWindow(m_Window);
+			LOG_TRACE("Added new state to top of state stack");
+			m_StateStack.push(newState);
+			LOG_TRACE("Initialized new state");
+			m_StateStack.top()->Initialize();
+
+			m_StatesToPush.pop();
+		}
+
 	}
 }

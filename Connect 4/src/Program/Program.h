@@ -3,6 +3,7 @@
 #include "State.h"
 
 #include <stack>
+#include <queue>
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
@@ -24,13 +25,17 @@ namespace Connect
 
 		// Useful methods
 		inline State* Top() { return m_StateStack.top(); }
-		inline bool isRunning() { return !m_StateStack.empty(); }
+		inline bool isRunning() { return !m_StateStack.empty() || !m_StatesToPush.empty(); }
 
 		// Will be run every frame to compute and draw
 		// Program will be locked at 60fps so 1/60 is the time between frames
 		void ExecuteFrame();
 
 		inline bool WasMousePressed() { return m_WasMousePressed; }
+
+	private:
+
+		void ExecuteStateChanges();
 
 	public:
 		static Program* s_Instance;
@@ -51,5 +56,8 @@ namespace Connect
 		// Number of times PopState was called
 		// Used after to keep variables in memory
 		int m_StatesToPop = 0;
+
+		// States pushed during the current frame
+		std::queue<State*> m_StatesToPush;
 	};
 }
