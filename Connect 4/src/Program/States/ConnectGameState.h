@@ -10,6 +10,8 @@
 #include "Graphics/Text.h"
 #include "Graphics/TextInput.h"
 
+#include <SFML/Graphics.hpp>
+
 namespace Connect
 {
 	class ConnectGameState : public State
@@ -23,7 +25,7 @@ namespace Connect
 			{
 				m_ColumnChoiceButtons.emplace_back(Button(onClickFunction(ColumnChoiceButtonFunction), this, std::to_string(i + 1)));
 
-				float xcoord = 227.0f + i * 125.0f;
+				float xcoord = 255.0f + i * 115.0f;
 				m_ColumnChoiceButtons.back().SetPosition(sf::Vector2f(xcoord, 25.0f));
 				m_ColumnChoiceButtons.back().SetSize(sf::Vector2f(75.0f, 75.0f));
 
@@ -52,6 +54,18 @@ namespace Connect
 			m_Player2Info.SetPosition(sf::Vector2f(1100.0f, 600.0f));
 			m_Player2Info.SetCharacterSize(24);
 			m_Player2Info.SetText("");
+
+			if (!m_BoardTexture.loadFromFile("res/images/Connect4Board.png"))
+			{
+				LOG_ERROR("Unable to load image from file");
+				return;
+			}
+
+			m_BoardTexture.setSmooth(true);
+			
+			m_Board.setPosition(227.0f, 100.0f);
+			m_Board.setScale(1.29f, 1.29f);
+			m_Board.setTexture(m_BoardTexture);
 		}
 
 		void Execute() override
@@ -68,12 +82,18 @@ namespace Connect
 			m_Window->draw(m_Player1Info);
 			m_Window->draw(m_Player2Info);
 
+			m_Window->draw(m_Board);
+
 			for (Button &b : m_ColumnChoiceButtons)
 				m_Window->draw(b);
+
+			DrawCounters();
 		}
 
 	private:
 		void PlayAITurn();
+
+		void DrawCounters();
 
 	// Button Functions
 	private:
@@ -96,5 +116,8 @@ namespace Connect
 		Text m_Player2Info;
 
 		std::vector<Button> m_ColumnChoiceButtons;
+
+		sf::Sprite m_Board;
+		sf::Texture m_BoardTexture;
 	};
 }
