@@ -17,7 +17,9 @@ namespace Connect
 	class ConnectGameState : public State
 	{
 	public:
-		ConnectGameState(Connect4Account* player1, bool player1AI, Connect4Account* player2, bool player2AI)
+		ConnectGameState(Connect4Account *player1, bool player1AI, Connect4Account *player2, bool player2AI)
+			: m_GameOver(false), m_WaitTimer(0),
+			  m_ContinueButton(onClickFunction(ContinueButtonFunction), this)
 		{
 			// Create column choice buttons
 			m_ColumnChoiceButtons.reserve(BOARD_WIDTH);
@@ -47,13 +49,9 @@ namespace Connect
 	public:
 		void Initialize() override
 		{
-			m_Player1Info.SetPosition(sf::Vector2f(50.0f, 600.0f));
-			m_Player1Info.SetCharacterSize(24);
-			m_Player1Info.SetText("");
-
-			m_Player2Info.SetPosition(sf::Vector2f(1100.0f, 600.0f));
-			m_Player2Info.SetCharacterSize(24);
-			m_Player2Info.SetText("");
+			m_ContinueButton.SetPosition(sf::Vector2f(1075.0f, 25.0f));
+			m_ContinueButton.SetSize(sf::Vector2f(150.0f, 100.0f));
+			m_ContinueButton.SetText("Continue");
 
 			if (!m_BoardTexture.loadFromFile("res/images/Connect4Board.png"))
 			{
@@ -70,24 +68,32 @@ namespace Connect
 
 		void Execute() override
 		{
-			PlayAITurn();
+			if (!m_GameOver)
+			{
+				PlayAITurn();
 
-			// Execute buttons if they have been pressed
-			for (Button& b : m_ColumnChoiceButtons)
-				b.OnMouseUpdate(m_Window);
+				// Execute buttons if they have been pressed
+				for (Button& b : m_ColumnChoiceButtons)
+					b.OnMouseUpdate(m_Window);
+
+			}
+			else
+			{
+				// Only use continue button when the game is over
+				m_ContinueButton.OnMouseUpdate(m_Window);
+			}
 		}
 
 		void Draw() override
 		{
-			m_Window->draw(m_Player1Info);
-			m_Window->draw(m_Player2Info);
-
 			m_Window->draw(m_Board);
-
-			for (Button &b : m_ColumnChoiceButtons)
-				m_Window->draw(b);
-
 			DrawCounters();
+
+			if (m_GameOver)
+				m_Window->draw(m_ContinueButton);
+			else
+				for (Button &b : m_ColumnChoiceButtons)
+					m_Window->draw(b);
 		}
 
 	private:
@@ -98,6 +104,7 @@ namespace Connect
 	// Button Functions
 	private:
 		void ColumnChoiceButtonFunction();
+		void ContinueButtonFunction();
 
 	private:
 		Connect4Account* m_Player1;
@@ -106,16 +113,16 @@ namespace Connect
 		bool m_IsPlayer1AI;
 		bool m_IsPlayer2AI;
 
-		unsigned int m_WaitTimer = 0;
+		unsigned int m_WaitTimer;
+		bool m_GameOver;
 
 		Connect4 m_Game;
 		SavedGame m_SavedGame;
 
 	private:
-		Text m_Player1Info;
-		Text m_Player2Info;
-
 		std::vector<Button> m_ColumnChoiceButtons;
+
+		Button m_ContinueButton;
 
 		sf::Sprite m_Board;
 		sf::Texture m_BoardTexture;

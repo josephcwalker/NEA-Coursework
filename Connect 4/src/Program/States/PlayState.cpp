@@ -69,10 +69,10 @@ namespace Connect
 			LOG_TRACE("Both Players are valid");
 
 			// Create either AI or Human players for the game
-			Connect4Account *player1 = m_IsPlayer1AI ? new Connect4AI("saves/" + m_Player1Username.GetInput() + "/accountData.bin")
-													 : new Connect4Account("saves/" + m_Player1Username.GetInput() + "/accountData.bin");
-			Connect4Account *player2 = m_IsPlayer2AI ? new Connect4AI("saves/" + m_Player1Username.GetInput() + "/accountData.bin")
-													 : new Connect4Account("saves/" + m_Player1Username.GetInput() + "/accountData.bin");
+			Connect4Account *player1 = m_IsPlayer1AI ? new Connect4AI(m_Player1Username.GetInput())
+													 : new Connect4Account(m_Player1Username.GetInput());
+			Connect4Account *player2 = m_IsPlayer2AI ? new Connect4AI(m_Player1Username.GetInput())
+													 : new Connect4Account(m_Player1Username.GetInput());
 
 			// Replace this state with Game state
 			Program::s_Instance->PopState();

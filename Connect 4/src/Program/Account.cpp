@@ -100,6 +100,9 @@ namespace Connect
 		file.close();
 
 		// Load neural network object
+		if (m_NeuralNetwork)
+			delete m_NeuralNetwork;
+			
 		m_NeuralNetwork = new NeuralNetwork(layerSizes, data);
 	}
 
@@ -110,7 +113,11 @@ namespace Connect
 
 		bool alreadyExists = std::filesystem::exists("saves/" + m_Name + "/accountData.bin");
 
-		std::ofstream file("saves/" + m_Name + "/accountData.bin", std::ios::binary);
+		std::fstream file;
+		if (alreadyExists)
+			file.open("saves/" + m_Name + "/accountData.bin", std::ios::binary | std::ios::out | std::ios::in);
+		else
+			file.open("saves/" + m_Name + "/accountData.bin", std::ios::binary | std::ios::out);
 
 		if (!file.is_open())
 		{

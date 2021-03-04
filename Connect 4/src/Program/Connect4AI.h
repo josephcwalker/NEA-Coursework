@@ -53,5 +53,21 @@ namespace Connect
 					max = currentBest;
 			}
 		}
+
+		void TrainOnGames() override
+		{
+			// No need to train when the AI just played
+			LOG_WARN("Trying to train on AI");
+
+			return;
+		}
+
+		void SaveGame(SavedGame &previousGame, bool player1) override
+		{
+			// No need to save the game if the AI played
+			LOG_WARN("Trying to save game using AI account");
+
+			return;
+		}
 	};
 }

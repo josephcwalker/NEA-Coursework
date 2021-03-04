@@ -1,5 +1,8 @@
 #include "ConnectGameState.h"
 
+#include "Program/Program.h"
+#include "GameOverState.h"
+
 namespace Connect
 {
 	void ConnectGameState::PlayAITurn()
@@ -37,6 +40,12 @@ namespace Connect
 				m_SavedGame.columnChoices.push_back(columnChoice);
 			}
 		}
+
+		// Check if game has finished
+		if (m_Game.GameOver())
+		{
+			m_GameOver = true;
+		}
 	}
 
 	void ConnectGameState::DrawCounters()
@@ -71,17 +80,25 @@ namespace Connect
 
 	void ConnectGameState::ColumnChoiceButtonFunction()
 	{
+		LOG_TRACE("Column choice button pressed");
+
 		// Make sure that it is a humans turn
 		if (m_Game.isPlayer1Turn() && m_IsPlayer1AI)
 			return;
 		if (!m_Game.isPlayer1Turn() && m_IsPlayer2AI)
 			return;
 
-		LOG_TRACE("Column choice button pressed");
 		if (m_Game.isValidPosition(recentButton->id))
 		{
 			m_Game.PlaceCounter(recentButton->id);
 			m_SavedGame.columnChoices.push_back(recentButton->id);
 		}
+	}
+
+	void ConnectGameState::ContinueButtonFunction()
+	{
+		LOG_TRACE("Continue Button Pressed");
+		Program::s_Instance->PushState(new GameOverState(m_Player1, m_Player2, m_SavedGame));
+		Program::s_Instance->PopState();
 	}
 }
