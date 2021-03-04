@@ -2,9 +2,19 @@
 
 #include <string>
 
-#define LOG_TRACE(x) Connect::Logger::s_Instance->PrintMessage(x, Connect::LOG_LEVEL::TRACE);
-#define LOG_WARN(x) Connect::Logger::s_Instance->PrintMessage(x, Connect::LOG_LEVEL::WARN);
-#define LOG_ERROR(x) Connect::Logger::s_Instance->PrintMessage(x, Connect::LOG_LEVEL::ERROR);
+#ifdef DEBUG
+
+#define LOG_TRACE(x) Connect::Logger::s_Instance->PrintMessage(x, Connect::LOG_LEVEL::TRACE)
+#define LOG_WARN(x) Connect::Logger::s_Instance->PrintMessage(x, Connect::LOG_LEVEL::WARN)
+#define LOG_ERROR(x) Connect::Logger::s_Instance->PrintMessage(x, Connect::LOG_LEVEL::ERROR)
+
+#else
+
+#define LOG_TRACE(x)
+#define LOG_WARN(x)
+#define LOG_ERROR(x)
+
+#endif
 
 namespace Connect
 {

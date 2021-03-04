@@ -8,7 +8,7 @@
 
 void Connect::DeleteAccountState::DeleteAccountButtonFunction()
 {
-	LOG_TRACE("Delete Account Button Pressed")
+	LOG_TRACE("Delete Account Button Pressed");
 	m_Messages.SetText("");
 
 	std::string error_message = CheckInputsAreValid();

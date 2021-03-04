@@ -33,7 +33,7 @@ namespace Connect
 			std::fstream file("saves/" + GetName() + "/previousGames.gam");
 			if (!file.is_open())
 			{
-				LOG_ERROR("Cannot open previous games file")
+				LOG_ERROR("Cannot open previous games file");
 				return;
 			}
 
