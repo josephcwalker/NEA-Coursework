@@ -81,7 +81,10 @@ namespace Connect
 
 			previousGames.clear();
 
-			m_NeuralNetwork->Train(gamesToTrainOn, 1.0f);
+			int repeats = 1000 / gamesToTrainOn.size();
+
+			for (int i = 0; i < repeats; i++)
+				m_NeuralNetwork->Train(gamesToTrainOn, 1.0f);
 
 			// Save updated Neural Network
 			SaveToFile();

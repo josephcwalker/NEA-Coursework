@@ -98,7 +98,7 @@ namespace Connect
 	void ConnectGameState::ContinueButtonFunction()
 	{
 		LOG_TRACE("Continue Button Pressed");
-		Program::s_Instance->PushState(new GameOverState(m_Player1, m_Player2, m_SavedGame));
+		Program::s_Instance->PushState(new GameOverState(m_Player1, m_Player2, m_SavedGame, m_Game.GetOutcome()));
 		Program::s_Instance->PopState();
 	}
 }

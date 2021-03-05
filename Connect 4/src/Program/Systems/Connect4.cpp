@@ -97,4 +97,20 @@ namespace Connect
 				return false;
 		return true;
 	}
+
+	Outcome Connect4::GetOutcome()
+	{
+		// Return the outcome of the game
+		if (GameWon())
+		{
+			if (m_CurrentPlayer == BoardSpace::PLAYER1)
+				return Outcome::PLAYER2WIN;
+			else
+				return Outcome::PLAYER1WIN;
+		}
+		else
+		{
+			return Outcome::DRAW;
+		}
+	}
 }

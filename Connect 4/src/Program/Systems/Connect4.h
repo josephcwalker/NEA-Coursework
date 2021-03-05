@@ -22,6 +22,13 @@ namespace Connect
 		PLAYER2 = 1
 	};
 
+	enum class Outcome
+	{
+		DRAW = -1,
+		PLAYER1WIN,
+		PLAYER2WIN
+	};
+
 	class Connect4
 	{
 	public:
@@ -36,6 +43,8 @@ namespace Connect
 		inline bool GameOver() { return GameWon() || GameDrawn(); }
 		bool GameWon();
 		bool GameDrawn();
+
+		Outcome GetOutcome();
 
 		inline const auto& GetBoard() { return m_Board; }
 
