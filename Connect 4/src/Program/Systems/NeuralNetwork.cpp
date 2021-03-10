@@ -6,6 +6,7 @@ namespace Connect
 {
 	NeuralNetwork::NeuralNetwork(std::vector<size_t> layerSizes)
 	{
+		// Resize array to correct size
 		m_Weights.reserve(layerSizes.size() - 1);
 		m_Biases.reserve(layerSizes.size() - 1);
 
@@ -116,6 +117,7 @@ namespace Connect
 
 	std::vector<unsigned int> NeuralNetwork::GetLayerSizes()
 	{
+		// Count neurons in each layer and return
 		std::vector<unsigned int> layerSizes(m_Weights.size() + 1);
 		for (int i = 0; i < m_Weights.size(); i++)
 			layerSizes[i + 1] = m_Weights[i].rows();

@@ -14,7 +14,7 @@ namespace Connect
 		// Check that the logger hasn't already been created
 		if (s_Instance)
 		{
-			s_Instance->PrintMessage("Attmpt to create multiple logger objects", LOG_LEVEL::WARN);
+			s_Instance->PrintMessage("Attempt to create multiple logger objects", LOG_LEVEL::WARN);
 			return;
 		}
 		else

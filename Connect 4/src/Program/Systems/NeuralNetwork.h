@@ -24,7 +24,7 @@ namespace Connect
 
 		std::vector<unsigned int> GetLayerSizes();
 
-		// Returns the accuracy of the network lower = better
+		// Returns the accuracy of the network, lower = better
 		float Train(std::vector<TrainingExample>& trainingData, float eta);
 
 	private:
@@ -32,6 +32,7 @@ namespace Connect
 
 		void RandomInitialize();
 
+		// Activation Function
 		Eigen::VectorXf activationFunctionVector(Eigen::VectorXf& vector);
 		Eigen::VectorXf activationFunctionPrimeVector(Eigen::VectorXf& vector);
 

@@ -10,6 +10,7 @@ namespace Connect
 	TextInput::TextInput(State *parentState, bool passwordField, std::string text)
 		: m_ParentState(parentState), m_PasswordInputField(passwordField), m_UserInput(""), m_DefaultText(text)
 	{
+		// Set default style and position
 		m_Rect.setFillColor(sf::Color(0x5E1F8DFF));
 		m_Rect.setPosition(sf::Vector2f(0.0f, 0.0f));
 		m_Rect.setSize(sf::Vector2f(100.0f, 100.0f));
@@ -43,6 +44,7 @@ namespace Connect
 
 	void TextInput::SetText(std::string text)
 	{
+		// Default text cannot be deleted
 		m_DefaultText = text;
 		m_Text.setString(m_DefaultText);
 		CenterTextLeft();
@@ -50,15 +52,19 @@ namespace Connect
 
 	void TextInput::KeyboardEvent(void (State::*functionPointer)())
 	{
+		// Make sure the key pressed is available
 		if (!m_Active || Program::s_KeyPressed == sf::Keyboard::Unknown)
 			return;
 
+		// Make sure that the key pressed was alphabetic
 		if (Program::s_KeyPressed >= sf::Keyboard::A && Program::s_KeyPressed <= sf::Keyboard::Z)
 			m_UserInput += 'a' + Program::s_KeyPressed;
 
+		// If backspace was pressed removed last character
 		if (Program::s_KeyPressed == sf::Keyboard::BackSpace && m_UserInput.size() > 0)
 			m_UserInput.pop_back();
 
+		// Display inputted text
 		if (m_PasswordInputField)
 			m_Text.setString(m_DefaultText + std::string(m_UserInput.size(), '*'));
 		else
@@ -66,6 +72,7 @@ namespace Connect
 
 		CenterTextLeft();
 
+		// Call function whenever text has changed
 		if (functionPointer)
 			std::invoke(functionPointer, *m_ParentState);
 	}
@@ -91,15 +98,12 @@ namespace Connect
 
 				m_Rect.setFillColor(sf::Color(0x6E2F9DFF));
 			}
-			else
+			else if (m_Active)
 			{
-				if (m_Active)
-				{
-					m_Active = false;
-					LOG_TRACE("Text Input Field is deactivated");
+				m_Active = false;
 
-					m_Rect.setFillColor(sf::Color(0x5E1F8DFF));
-				}
+				LOG_TRACE("Text Input Field is deactivated")	
+				m_Rect.setFillColor(sf::Color(0x5E1F8DFF));
 			}
 		}
 	}

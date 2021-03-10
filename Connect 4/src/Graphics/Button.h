@@ -33,6 +33,7 @@ namespace Connect
 		void CenterTextLeft();
 
 	private:
+		// Drawable objects
 		sf::RectangleShape m_Rect;
 		sf::Text m_Text;
 
@@ -40,6 +41,7 @@ namespace Connect
 		onClickFunction m_ClickFunction = nullptr;
 		State* m_ParentState = nullptr;
 
+		// Used to know which button was pressed
 		int id = -1;
 	};
 }

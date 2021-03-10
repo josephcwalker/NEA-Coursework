@@ -11,6 +11,7 @@ namespace Connect
 
 	Program::Program()
 	{
+		// Check for singleton
 		if (s_Instance)
 		{
 			LOG_WARN("Program object created multiple times");
@@ -21,7 +22,6 @@ namespace Connect
 
 		// Create Window and give pointer to it for all states
 		LOG_TRACE("New Window created");
-
 		m_Window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Connect 4 With AI", sf::Style::Titlebar | sf::Style::Close);
 
 		if (!m_Window)
@@ -43,6 +43,7 @@ namespace Connect
 
 	Program::~Program()
 	{
+		// Delete any states left in stack
 		while (!m_StateStack.empty())
 			PopState();
 		
@@ -64,6 +65,7 @@ namespace Connect
 
 	void Program::RemoveAllStates()
 	{
+		// -1 represents pop all states
 		m_StatesToPop = -1;
 	}
 

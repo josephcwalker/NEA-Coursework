@@ -13,7 +13,9 @@ namespace Connect
 {
 	void PlayState::AIButtonFunction()
 	{
+		// Swap between AI and Human
 		LOG_TRACE("AI choice button pressed");
+
 		if (recentButton->id == 1)
 		{
 			m_IsPlayer1AI = !m_IsPlayer1AI;
@@ -44,6 +46,7 @@ namespace Connect
 		bool player1Valid = true;
 		bool player2Valid = true;
 
+		// Check player 1 inputs correct
 		std::string error_message = CheckInputsAreValid(m_Player1Username, m_Player1Password, m_IsPlayer1AI);
 
 		if (!error_message.empty())
@@ -53,6 +56,7 @@ namespace Connect
 			LOG_WARN("Error selecting player 1");
 		}
 
+		// Check player 2 inputs correct
 		error_message = CheckInputsAreValid(m_Player2Username, m_Player2Password, m_IsPlayer2AI);
 
 		if (!error_message.empty())

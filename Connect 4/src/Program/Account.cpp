@@ -59,6 +59,7 @@ namespace Connect
 
 	Account::~Account()
 	{
+		// Clean up memory
 		if (m_NeuralNetwork)
 			delete m_NeuralNetwork;
 	}
@@ -108,6 +109,7 @@ namespace Connect
 
 	void Account::SaveToFile()
 	{
+		// Create saves directory
 		if (!std::filesystem::exists("saves/" + m_Name))
 			std::filesystem::create_directories("saves/" + m_Name);
 
@@ -129,7 +131,7 @@ namespace Connect
 		{
 			// Problem! To write to a binary file and keep 4 byte long numberse
 			// Must save number as a lvalue and then write that
-			// Find a workaround
+			// Can't find any workaround for this
 
 			// ----------- Write Metadata -----------
 			std::vector<unsigned int> layerSizes = m_NeuralNetwork->GetLayerSizes();
@@ -141,7 +143,7 @@ namespace Connect
 			file.write(reinterpret_cast<const char*>(&sizeOfUsername), 4);
 
 			int sizeOfPassword = m_Password.size();
-			file.write(reinterpret_cast<const char*>(&sizeOfPassword), 4); // TODO: store digest size of SHA-1
+			file.write(reinterpret_cast<const char*>(&sizeOfPassword), 4);
 
 			int numberOfLayers = layerSizes.size();
 			file.write(reinterpret_cast<const char*>(&numberOfLayers), 4);
@@ -151,12 +153,13 @@ namespace Connect
 
 			// ----------- Write header -----------
 			file.write(m_Name.c_str(), sizeOfUsername);
-			file.write(m_Password.c_str(), sizeOfPassword); // TODO: Hash this using SHA-1
+			file.write(m_Password.c_str(), sizeOfPassword);
 
 			file.write(reinterpret_cast<const char *>(&DateCreated), sizeof(time_t));
 		}
 		else
 		{
+			// Seek to where the WinLosses are located
 			file.seekp(m_NNOffset - 2 * sizeof(WinLosses));
 		}
 

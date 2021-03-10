@@ -10,6 +10,7 @@ namespace Connect
 	Button::Button(onClickFunction function, State *parentState, std::string text)
 		: m_ClickFunction(function), m_ParentState(parentState)
 	{
+		// Set default style and position
 		m_Rect.setFillColor(sf::Color(0x5E1F8DFF));
 		m_Rect.setPosition(sf::Vector2f(0.0f, 0.0f));
 		m_Rect.setSize(sf::Vector2f(100.0f, 100.0f));
@@ -44,6 +45,7 @@ namespace Connect
 	void Button::SetText(std::string text, bool centerLeft)
 	{
 		m_Text.setString(text);
+		
 		if (centerLeft)
 			CenterTextLeft();
 		else

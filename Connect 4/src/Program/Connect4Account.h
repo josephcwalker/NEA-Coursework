@@ -15,6 +15,7 @@ namespace Connect
 		Connect4Account(std::string username)
 			: Account("saves/" + username + "/accountData.bin")
 		{
+			// Make sure that the Neural network is loaded for playing the game/training
 			LoadNeuralNetwork();
 		}
 
@@ -81,6 +82,7 @@ namespace Connect
 
 			previousGames.clear();
 
+			// Train on games multiple times
 			int repeats = 1000 / gamesToTrainOn.size();
 
 			for (int i = 0; i < repeats; i++)
@@ -92,6 +94,7 @@ namespace Connect
 
 		virtual void SaveGame(SavedGame& previousGame, bool player1)
 		{
+			// Open file
 			std::ofstream file("saves/" + GetName() + "/previousGames.gam", std::ios::app);
 
 			if (!file.is_open())
@@ -100,6 +103,7 @@ namespace Connect
 				return;
 			}
 
+			// Write new game to file
 			file << "{ ";
 			file << player1 << ' ';
 			for (int i : previousGame.columnChoices)
@@ -110,6 +114,7 @@ namespace Connect
 		}
 
 	protected:
+		// Convert board to Neural Network input format
 		Eigen::VectorXf ConvertBoard(Connect4& board, bool player1)
 		{
 			auto boardArray = board.GetBoard();
@@ -127,6 +132,7 @@ namespace Connect
 			return output;
 		}
 
+		// Convert column choice to Neural Network output
 		Eigen::VectorXf ConvertOutput(int columnChoice)
 		{
 			Eigen::VectorXf output = Eigen::VectorXf::Zero(BOARD_WIDTH);
@@ -135,6 +141,7 @@ namespace Connect
 			return output;
 		}
 
+		// Run game and return list of moves up to a certain number
 		Connect4 SimulateGame(SavedGame game, int moveNumber)
 		{
 			Connect4 simulation;

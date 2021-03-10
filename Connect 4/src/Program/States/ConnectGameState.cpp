@@ -25,6 +25,7 @@ namespace Connect
 			}
 		}
 
+		// Repeat for player 2
 		if (!m_Game.isPlayer1Turn() && m_IsPlayer2AI)
 		{
 			if (m_WaitTimer < 60)
@@ -50,6 +51,7 @@ namespace Connect
 
 	void ConnectGameState::DrawCounters()
 	{
+		// Draw counters in the correct positions on the board
 		auto board = m_Game.GetBoard();
 		sf::CircleShape redCounter(45);
 		sf::CircleShape yellowCounter(45);
@@ -60,6 +62,7 @@ namespace Connect
 		int leftSide = 245.0f;
 		int topSide = 108.0f;
 
+		// Loop through all positions and draw counters where they exist
 		for (int i = 0; i < BOARD_WIDTH; i++)
 		{
 			for (int j = 0; j < BOARD_HEIGHT; j++)

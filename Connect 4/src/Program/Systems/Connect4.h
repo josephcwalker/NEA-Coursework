@@ -24,7 +24,7 @@ namespace Connect
 
 	enum class Outcome
 	{
-		DRAW = -1,
+		DRAW,
 		PLAYER1WIN,
 		PLAYER2WIN
 	};
@@ -40,6 +40,7 @@ namespace Connect
 		bool isValidPosition(int column);		
 		void PlaceCounter(int column);
 
+		// Game state checks
 		inline bool GameOver() { return GameWon() || GameDrawn(); }
 		bool GameWon();
 		bool GameDrawn();
