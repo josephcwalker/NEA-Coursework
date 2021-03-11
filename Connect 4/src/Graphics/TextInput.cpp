@@ -102,7 +102,7 @@ namespace Connect
 			{
 				m_Active = false;
 
-				LOG_TRACE("Text Input Field is deactivated")	
+				LOG_TRACE("Text Input Field is deactivated");
 				m_Rect.setFillColor(sf::Color(0x5E1F8DFF));
 			}
 		}

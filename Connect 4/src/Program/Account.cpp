@@ -1,5 +1,7 @@
 #include "Account.h"
 
+#include "SHA-1/sha1.hpp"
+
 #include <fstream>
 #include <filesystem>
 
@@ -8,8 +10,13 @@
 namespace Connect
 {
 	Account::Account(std::string name, std::string password)
-		: m_Name(name), m_Password(password)
+		: m_Name(name)
 	{
+		// Hash and store password
+		SHA1 checksum;
+		checksum.update(password);
+		m_Password = checksum.final();
+
 		// Create new neural network with random initialization
 		m_NeuralNetwork = new NeuralNetwork(NEURAL_NETWORK_LAYER_SIZES);
 
@@ -171,5 +178,12 @@ namespace Connect
 		file.write(neuralNetworkData.first.get(), neuralNetworkData.second);
 
 		file.close();
+	}
+
+	bool Account::PasswordMatches(std::string testPassword)
+	{
+		SHA1 checksum;
+		checksum.update(testPassword);
+		return strcmp(m_Password.c_str(), checksum.final().c_str()) == 0;
 	}
 }

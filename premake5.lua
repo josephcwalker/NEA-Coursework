@@ -33,7 +33,8 @@ project "Connect 4"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/SFML/include",
-		"%{prj.name}/vendor/Eigen"
+		"%{prj.name}/vendor/Eigen",
+		"%{prj.name}/vendor"
 	}
 
 	libdirs
