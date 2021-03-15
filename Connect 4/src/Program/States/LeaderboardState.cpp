@@ -10,6 +10,10 @@ namespace Connect
 	{
 		LOG_TRACE("Loading users from file");
 
+		// Create directory if doesn't exist
+		if (!std::filesystem::exists("saves/"))
+			std::filesystem::create_directories("saves/");
+
 		for (auto& p : std::filesystem::directory_iterator("saves/"))
 			// Add user to list of all users
 			m_Users.push_back((Account(p.path().generic_string() + "/accountData.bin")));
