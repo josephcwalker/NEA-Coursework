@@ -83,7 +83,7 @@ namespace Connect
 			previousGames.clear();
 
 			// Train on games multiple times
-			int repeats = 1000 / gamesToTrainOn.size();
+			int repeats = 10000 / gamesToTrainOn.size();
 
 			for (int i = 0; i < repeats; i++)
 				m_NeuralNetwork->Train(gamesToTrainOn, 1.0f);

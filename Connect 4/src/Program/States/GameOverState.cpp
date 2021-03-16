@@ -1,6 +1,5 @@
 #include "GameOverState.h"
 
-#include "Program/Connect4AI.h"
 #include "Program/Program.h"
 
 namespace Connect

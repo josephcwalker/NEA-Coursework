@@ -6,6 +6,7 @@
 #include "ConnectGameState.h"
 
 #include "Program/Connect4Account.h"
+#include "Program/Connect4AI.h"
 #include "Program/Systems/Connect4.h"
 
 #include "Graphics/Button.h"
@@ -52,6 +53,28 @@ namespace Connect
 			m_GameInfo.SetPosition(sf::Vector2f(350.0f, 200.0f));
 			m_GameInfo.SetCharacterSize(36);
 			m_GameInfo.SetText("Any human player's AIs have been trained\n       on this and previous games");
+
+
+			// Update wins and losses
+			bool isPlayer1AI = dynamic_cast<Connect4AI*>(m_Player1);
+			bool isPlayer2AI = dynamic_cast<Connect4AI*>(m_Player2);
+
+			auto player1Update = isPlayer1AI ? &m_Player1->AIStats : &m_Player1->HumanStats;
+			auto player2Update = isPlayer2AI ? &m_Player2->AIStats : &m_Player2->HumanStats;
+
+			if (m_GameOutcome == Outcome::PLAYER1WIN)
+			{
+				player1Update->wins++;
+				player2Update->losses++;
+			}
+			else if (m_GameOutcome == Outcome::PLAYER2WIN)
+			{
+				player1Update->losses++;
+				player2Update->wins++;
+			}
+
+			m_Player1->SaveToFile();
+			m_Player2->SaveToFile();
 		}
 
 		void Execute()
